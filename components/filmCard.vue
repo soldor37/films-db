@@ -4,8 +4,8 @@
       <template #title>
         <h3>{{ filmInfo.title }}</h3>
       </template>
-      <template #img>
-        <img src="/foto5.png" alt="" />
+      <template #img v-if="filmDetails">
+        <img :src="`https://image.tmdb.org/t/p/w500${filmDetails.backdrop_path}`" alt="" />
       </template>
       <template #text v-if="filmDetails">
         <p>
@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       filmDetails: null,
+      filmImage: null
     };
   },
   created() {
@@ -44,7 +45,7 @@ export default {
   methods: {
     async getFilmDetails() {
       const filmDetails = await this.$axios.$get(
-        `/movie/${this.filmInfo.id}?api_key=${this.$apiKey}&language=en-US`
+        `/movie/${this.filmInfo.id}?api_key=${this.$store.state.apiKey}&language=en-US`
       );
       this.filmDetails = filmDetails;
     },
@@ -52,7 +53,8 @@ export default {
   filters: {
     convertDate(date) {
       let dateParts = date.split("-");
-      return [dateParts[2],dateParts[1],dateParts[0]].join('.');
+    //   return [dateParts[2],dateParts[1],dateParts[0]].join('.');
+    return dateParts[0]
     },
   },
 };

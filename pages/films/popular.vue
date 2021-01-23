@@ -1,9 +1,15 @@
 <template>
   <div class="container">
-    <div class="films" v-if="moviesList">
-      <div v-for="film in moviesList.results" :key="film.id" class="film">
-        <film-card :film-info="film" />
-      </div>
+    <div class="center grid">
+      <vs-row type="flex" justify="center" align="center">
+        <vs-col type="flex" justify="center" align="center" w="10">
+          <vs-row class="films" v-if="moviesList">
+            <vs-col v-for="film in moviesList.results" :key="film.id" class="film"  lg='3' sm='6' xs='12'>
+              <film-card :film-info="film" />
+            </vs-col>
+          </vs-row>
+        </vs-col>
+      </vs-row>
     </div>
   </div>
 </template>
@@ -12,7 +18,7 @@
 // import axios from "axios";
 import filmCard from "@/components/filmCard";
 export default {
-  name: "Test",
+  name: "Popular",
   components: {
     filmCard,
   },
@@ -26,9 +32,11 @@ export default {
     this.getFilms();
   },
   methods: {
-  async getFilms() {
-      const moviesList = await this.$axios.$get(`/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`)
-      console.log(moviesList)
+    async getFilms() {
+      const moviesList = await this.$axios.$get(
+        `/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
+      );
+      console.log(moviesList);
       this.moviesList = moviesList;
       // return new Promise((resolve, reject) => {
       //   axios
@@ -47,4 +55,18 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.container {
+  .films {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 24px 0;
+    .film {
+      // width: 25%;
+      padding: 0 8px;
+      margin-bottom: 16px;
+    }
+  }
+}
+</style>
