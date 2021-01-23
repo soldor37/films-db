@@ -2,13 +2,24 @@
   <div class="container">
     <vs-card>
       <template #title>
-        <h3>Pot with a plant</h3>
+        <h3>{{ filmInfo.title }}</h3>
       </template>
       <template #img>
         <img src="/foto5.png" alt="" />
       </template>
-      <template #text>
-        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.</p>
+      <template #text v-if="filmDetails">
+        <p>
+          {{ filmDetails.release_date | convertDate
+          }}{{
+            filmDetails.production_countries.length > 0
+              ? ", " + filmDetails.production_countries[0].name
+              : null
+          }}{{
+            filmDetails.genres.length > 0
+              ? ", " + filmDetails.genres[0].name
+              : null
+          }}
+        </p>
       </template>
       <template #interactions>
         <vs-button danger icon>
@@ -22,5 +33,27 @@
 <script>
 export default {
   props: ["filmInfo"],
+  data() {
+    return {
+      filmDetails: null,
+    };
+  },
+  created() {
+    this.getFilmDetails();
+  },
+  methods: {
+    async getFilmDetails() {
+      const filmDetails = await this.$axios.$get(
+        `/movie/${this.filmInfo.id}?api_key=${this.$apiKey}&language=en-US`
+      );
+      this.filmDetails = filmDetails;
+    },
+  },
+  filters: {
+    convertDate(date) {
+      let dateParts = date.split("-");
+      return [dateParts[2],dateParts[1],dateParts[0]].join('.');
+    },
+  },
 };
 </script>

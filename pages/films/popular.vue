@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="films">
-      <div v-for="film in moviesList" :key="film.id" class="film">
+    <div class="films" v-if="moviesList">
+      <div v-for="film in moviesList.results" :key="film.id" class="film">
         <film-card :film-info="film" />
       </div>
     </div>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import axios from "axios";
+// import axios from "axios";
 import filmCard from "@/components/filmCard";
 export default {
   name: "Test",
@@ -26,19 +26,22 @@ export default {
     this.getFilms();
   },
   methods: {
-    getFilms() {
-      return new Promise((resolve, reject) => {
-        axios
-          .get(
-            `https://api.themoviedb.org/3/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
-          )
-          .then((resp) => {
-            this.moviesList = resp.data;
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-      });
+  async getFilms() {
+      const moviesList = await this.$axios.$get(`/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`)
+      console.log(moviesList)
+      this.moviesList = moviesList;
+      // return new Promise((resolve, reject) => {
+      //   axios
+      //     .get(
+      //       `/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
+      //     )
+      //     .then((resp) => {
+      //       this.moviesList = resp.data;
+      //     })
+      //     .catch((err) => {
+      //       console.log(err);
+      //     });
+      // });
     },
   },
 };
