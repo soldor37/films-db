@@ -2,13 +2,13 @@
   <div class="container">
     <vs-card>
       <template #title>
-        <h3>{{ filmInfo.title }}</h3>
+        <h3 style="color: #12232e">{{ filmInfo.title }}</h3>
       </template>
       <template #img v-if="filmDetails">
         <img :src="`https://image.tmdb.org/t/p/w500${filmDetails.backdrop_path}`" alt="" />
       </template>
       <template #text v-if="filmDetails">
-        <p>
+        <p style="color: #203647">
           {{ filmDetails.release_date | convertDate
           }}{{
             filmDetails.production_countries.length > 0

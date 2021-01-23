@@ -1,6 +1,30 @@
 <template>
   <div>
-    <Nuxt />
+    <vs-navbar
+      color="#12232e"
+      text-white
+      fixed
+      shadow
+      shadowScroll
+      center-collapsed
+    >
+      <template #left>
+        <vs-navbar-item to="/" :active="$route.name == 'index'" id="index">
+          <i class="bx bx-home" style="font-size: 22px"></i>
+        </vs-navbar-item>
+        <vs-navbar-item
+          to="/films/popular"
+          :active="$route.name == 'films-popular'"
+          id="popular"
+        >
+          Popular
+        </vs-navbar-item>
+        <vs-navbar-item to="/films/new" :active="$route.name == 'films-new'">
+          New
+        </vs-navbar-item>
+      </template>
+    </vs-navbar>
+    <div class="content"><Nuxt /></div>
   </div>
 </template>
 
@@ -25,23 +49,21 @@ export default {
 * {
   --shadow-light-blue: #eefbfb;
   --shadow-dark-blue: #203647;
-  --lightest-blue: #4DA8DA;
-  --lighter-blue: #007CC7;
-  --dark-blue: #12232E;
+  --lightest-blue: #4da8da;
+  --lighter-blue: #007cc7;
+  --dark-blue: #12232e;
 }
 html {
-  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, sans-serif;
-  font-size: 16px;
-  word-spacing: 1px;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 body {
-  background-color: var(--lightest-blue);
+  background: rgb(238, 251, 251);
+  background: radial-gradient(
+    circle,
+    rgba(238, 251, 251, 1) 0%,
+    rgba(77, 168, 218, 1) 50%,
+    rgba(0, 124, 199, 1) 100%
+  );
 }
 
 *,
@@ -50,5 +72,8 @@ body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+.content {
+  padding-top: 44px;
 }
 </style>
