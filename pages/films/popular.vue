@@ -11,6 +11,10 @@
         >
           <vs-row class="films" v-if="moviesList">
             <vs-col
+              ><div class="title">{{lang == 'en' ? 'Popular movies' : 'Популярные'}}</div>
+              <div class="subtitle">{{lang == 'en' ? '(this list updates daily)' : '(список обновляется ежедневно)'}}</div></vs-col
+            >
+            <vs-col
               v-for="film in moviesList.results"
               :key="film.id"
               class="film"
@@ -55,24 +59,27 @@ export default {
   },
   methods: {
     async getFilms() {
+      const loading = this.$vs.loading({
+        type: 'square',
+        color: "#007cc7",
+      });
       const moviesList = await this.$axios.$get(
-        `/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
+        `/movie/popular?api_key=${this.apiKey}&language=${this.$store.getters.getLang}&page=${this.page}`
       );
       this.moviesList = moviesList;
-      // return new Promise((resolve, reject) => {
-      //   axios
-      //     .get(
-      //       `/movie/popular?api_key=${this.apiKey}&language=en-US&page=1`
-      //     )
-      //     .then((resp) => {
-      //       this.moviesList = resp.data;
-      //     })
-      //     .catch((err) => {
-      //       console.log(err);
-      //     });
-      // });
+      loading.close();
     },
   },
+  watch:{
+    page(){
+      this.getFilms();
+    }
+  },
+  computed:{
+    lang() {
+     return this.$store.getters.getLang;
+    }
+  }
 };
 </script>
 
@@ -86,7 +93,20 @@ export default {
     margin: 12px 0;
     background: var(--shadow-light-blue);
     border-radius: 15px;
-
+    .title {
+      font-size: 34px;
+      line-height: 42px;
+      font-weight: bold;
+      color: var(--shadow-dark-blue);
+      margin-bottom: 4px;
+    }
+    .subtitle{
+      font-size: 28px;
+      line-height: 32px;
+      font-weight: normal;
+      color: var(--dark-blue);
+      margin-bottom: 18px;
+    }
     .film {
       // width: 25%;
       padding: 0 8px;
@@ -96,7 +116,7 @@ export default {
       display: flex;
       align-items: center;
       justify-content: center;
-      .wrapper{
+      .wrapper {
         background: white;
         border-radius: 15px;
         padding: 6px;

@@ -17,11 +17,20 @@
           :active="$route.name == 'films-popular'"
           id="popular"
         >
-          Popular
+          {{lang == 'en' ? 'Popular' : 'Популярные'}}
         </vs-navbar-item>
         <vs-navbar-item to="/films/new" :active="$route.name == 'films-new'">
-          New
+          {{lang == 'en' ? 'New' : 'Новые'}} 
         </vs-navbar-item>
+      </template>
+      <template #right>
+        <vs-button
+          @click="changeLang"
+          color="#4DA8DA"
+        >
+          {{lang === 'en' ? 'EN' : 'RU'}}
+          <template #animate>{{lang === 'en' ? 'RU' : 'EN'}} </template>
+        </vs-button>
       </template>
     </vs-navbar>
     <div class="content"><Nuxt /></div>
@@ -30,6 +39,16 @@
 
 <script>
 export default {
+  methods:{
+    changeLang(){
+      this.$store.commit('changeLang')
+    }
+  },
+  computed:{
+    lang() {
+     return this.$store.getters.getLang;
+    }
+  }
   // computed: {
   //   cssVars() {
   //     // Dark Blue: #12232E

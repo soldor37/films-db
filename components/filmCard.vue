@@ -1,11 +1,14 @@
 <template>
-  <div class="container">
-    <vs-card>
+  <div class="container" >
+    <vs-card >
       <template #title>
         <h3 style="color: #12232e">{{ filmInfo.title }}</h3>
       </template>
       <template #img v-if="filmDetails">
-        <img :src="`https://image.tmdb.org/t/p/w500${filmDetails.backdrop_path}`" alt="" />
+        <img
+          :src="`https://image.tmdb.org/t/p/w500${filmDetails.backdrop_path}`"
+          alt=""
+        />
       </template>
       <template #text v-if="filmDetails">
         <p style="color: #203647">
@@ -36,7 +39,7 @@ export default {
   data() {
     return {
       filmDetails: null,
-      filmImage: null
+      filmImage: null,
     };
   },
   created() {
@@ -44,17 +47,22 @@ export default {
   },
   methods: {
     async getFilmDetails() {
+      const loading = this.$vs.loading({
+        type: 'square',
+        color: "#007cc7",
+      });
       const filmDetails = await this.$axios.$get(
-        `/movie/${this.filmInfo.id}?api_key=${this.$store.state.apiKey}&language=en-US`
+        `/movie/${this.filmInfo.id}?api_key=${this.$store.state.apiKey}&language=${this.$store.getters.getLang}`
       );
       this.filmDetails = filmDetails;
+      loading.close();
     },
   },
   filters: {
     convertDate(date) {
       let dateParts = date.split("-");
-    //   return [dateParts[2],dateParts[1],dateParts[0]].join('.');
-    return dateParts[0]
+      //   return [dateParts[2],dateParts[1],dateParts[0]].join('.');
+      return dateParts[0];
     },
   },
 };
