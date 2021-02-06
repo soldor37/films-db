@@ -17,19 +17,16 @@
           :active="$route.name == 'films-popular'"
           id="popular"
         >
-          {{lang == 'en' ? 'Popular' : 'Популярные'}}
+          {{ lang == "en" ? "Popular" : "Популярные" }}
         </vs-navbar-item>
         <vs-navbar-item to="/films/new" :active="$route.name == 'films-new'">
-          {{lang == 'en' ? 'New' : 'Новые'}} 
+          {{ lang == "en" ? "New" : "Новые" }}
         </vs-navbar-item>
       </template>
       <template #right>
-        <vs-button
-          @click="changeLang"
-          color="#4DA8DA"
-        >
-          {{lang === 'en' ? 'EN' : 'RU'}}
-          <template #animate>{{lang === 'en' ? 'RU' : 'EN'}} </template>
+        <vs-button @click="changeLang" color="#4DA8DA">
+          {{ lang === "en" ? "EN" : "RU" }}
+          <template #animate>{{ lang === "en" ? "RU" : "EN" }} </template>
         </vs-button>
       </template>
     </vs-navbar>
@@ -39,16 +36,16 @@
 
 <script>
 export default {
-  methods:{
-    changeLang(){
-      this.$store.commit('changeLang')
-    }
+  methods: {
+    changeLang() {
+      this.$store.commit("changeLang");
+    },
   },
-  computed:{
+  computed: {
     lang() {
-     return this.$store.getters.getLang;
-    }
-  }
+      return this.$store.getters.getLang;
+    },
+  },
   // computed: {
   //   cssVars() {
   //     // Dark Blue: #12232E
@@ -83,6 +80,21 @@ body {
     rgba(77, 168, 218, 1) 50%,
     rgba(0, 124, 199, 1) 100%
   );
+}
+
+*::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  display: block;
+  background: var(--lightest-blue);
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--dark-blue);
+  border-radius: 5px;
+}
+*::selection {
+  background: rgba(37, 100, 255, 0.15);
 }
 
 *,

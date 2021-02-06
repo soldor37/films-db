@@ -48,7 +48,6 @@ export default {
   },
   data() {
     return {
-      apiKey: "bcbc69d35e63a4cf19b4dcec5bacaa14",
       moviesList: null,
 
       page: 1,
@@ -64,7 +63,7 @@ export default {
         color: "#007cc7",
       });
       const moviesList = await this.$axios.$get(
-        `/movie/popular?api_key=${this.apiKey}&language=${this.$store.getters.getLang}&page=${this.page}`
+        `/movie/popular?api_key=${this.$store.getters.getApiKey}&language=${this.$store.getters.getLang}&page=${this.page}`
       );
       this.moviesList = moviesList;
       loading.close();

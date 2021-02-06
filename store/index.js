@@ -4,6 +4,9 @@ export const state = () => ({
 })
 
 export const getters = {
+    getApiKey: state => {
+        return state.apiKey
+    },
     getLang: state => {
         return state.lang
     }
