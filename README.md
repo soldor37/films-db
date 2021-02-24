@@ -1,5 +1,7 @@
 # films-db
 
+Movies datebase SPA on Nuxt.js + Vuesax with TMDb API
+
 ## Build Setup
 
 ```bash
